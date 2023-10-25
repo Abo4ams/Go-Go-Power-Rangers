@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
 	public GameObject pauseMenu;
 	public bool isPaused;
+    public Image backgroundImage;
     // Start is called before the first frame update
     void Start()
     {
         pauseMenu.SetActive(false);
+        backgroundImage.enabled = false;
     }
 
     // Update is called once per frame
@@ -30,6 +33,7 @@ public class PauseMenu : MonoBehaviour
 	    pauseMenu.SetActive(true);
 	    Time.timeScale = 0f;
 	    isPaused = true;
+        backgroundImage.enabled = true;
     }
 
     public void ResumeGame()
@@ -37,6 +41,7 @@ public class PauseMenu : MonoBehaviour
 	    pauseMenu.SetActive(false);
 	    Time.timeScale = 1f;
 	    isPaused = false;
+        backgroundImage.enabled = false;
     }
 	    
     public void GoToMainMenu()
@@ -46,6 +51,7 @@ public class PauseMenu : MonoBehaviour
             isPaused = false;
             pauseMenu.SetActive(false);
             Time.timeScale = 1f;
+            backgroundImage.enabled = false;
         }
         SceneManager.LoadScene("StartScene");
     }
