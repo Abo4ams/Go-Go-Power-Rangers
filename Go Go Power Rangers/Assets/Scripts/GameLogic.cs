@@ -5,16 +5,20 @@ public class GameLogic : MonoBehaviour
 {
     public PlayerMovement movementScript;
     public PlayerCollision collisionScript;
+    public PauseMenu pauseMenu;
     // Start is called before the first frame update
     void Start()
     {
         movementScript = GetComponent<PlayerMovement>();
         collisionScript = GetComponent<PlayerCollision>();
+        pauseMenu = GetComponent<PauseMenu>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (pauseMenu.isPaused)
+            return;
         if (Input.GetKeyDown(KeyCode.J))
         {
             if (collisionScript.red == 5)
@@ -22,6 +26,8 @@ public class GameLogic : MonoBehaviour
                 movementScript.playerState = PlayerMovement.PlayerState.RED;
                 collisionScript.red--;
                 collisionScript.redText.text = "Points: " + collisionScript.red;
+                movementScript.greenPowerup = false;
+                collisionScript.blueShield = false;
             }
         }
         if (Input.GetKeyDown(KeyCode.K))
@@ -31,6 +37,7 @@ public class GameLogic : MonoBehaviour
                 movementScript.playerState = PlayerMovement.PlayerState.GREEN;
                 collisionScript.green--;
                 collisionScript.greenText.text = "Points: " + collisionScript.green;
+                collisionScript.blueShield = false;
             }
         }
         if (Input.GetKeyDown(KeyCode.L))
@@ -40,6 +47,7 @@ public class GameLogic : MonoBehaviour
                 movementScript.playerState = PlayerMovement.PlayerState.BLUE;
                 collisionScript.blue--;
                 collisionScript.blueText.text = "Points: " + collisionScript.blue;
+                movementScript.greenPowerup = false;
             }
         }
         if (Input.GetKeyDown(KeyCode.Space))
