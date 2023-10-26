@@ -1411,7 +1411,9 @@ MonoBehaviour:
   creditsMenu: {fileID: 0}
   howToPlayMenu: {fileID: 0}
   optionsMenu: {fileID: 0}
-  audioScript: {fileID: 2098342823}
+  mainMenu: {fileID: 0}
+  mainMenuTrack: {fileID: 2098342824}
+  isMuted: 0
 --- !u!114 &1864218644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1432,6 +1434,9 @@ MonoBehaviour:
   greenText: {fileID: 0}
   blueText: {fileID: 0}
   scoreText: {fileID: 598535251}
+  backgroundAudio: {fileID: 0}
+  collectOrbAudio: {fileID: 0}
+  hitObstacleAudio: {fileID: 0}
   movementScript: {fileID: 0}
 --- !u!1 &2022190999
 GameObject:
@@ -1576,7 +1581,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2098342825}
   - component: {fileID: 2098342824}
-  - component: {fileID: 2098342823}
   m_Layer: 0
   m_Name: BackgroundAudio
   m_TagString: BackgroundMenuMusic
@@ -1584,20 +1588,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2098342823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2098342822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8be094d9ba1e9664d9b67765b156123e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainMenuTrack: {fileID: 2098342824}
-  musicObj: []
 --- !u!82 &2098342824
 AudioSource:
   m_ObjectHideFlags: 0

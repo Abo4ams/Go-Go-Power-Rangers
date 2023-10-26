@@ -7,7 +7,10 @@ public class MainMenu : MonoBehaviour
     public GameObject creditsMenu;
     public GameObject howToPlayMenu;
     public GameObject optionsMenu;
-    public AudioController audioScript;
+    public GameObject mainMenu;
+    public AudioSource mainMenuTrack;
+
+    public bool isMuted = false;
 
     public void Start()
     {
@@ -15,13 +18,13 @@ public class MainMenu : MonoBehaviour
         {
             creditsMenu.SetActive(false);
             howToPlayMenu.SetActive(false);
+            optionsMenu.SetActive(false);
         }
-        if (audioScript && audioScript.musicObj[0])
-            audioScript.musicObj[0].SetActive(true);
     }
 
     public void PlayGame()
     {
+        mainMenuTrack.Stop();
         SceneManager.LoadScene("GameScene");
     }
 
@@ -30,37 +33,17 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    private void Update()
-    {
-        if (SceneManager.GetActiveScene().name == "GameScene")
-        {
-            if (audioScript && audioScript.musicObj[0])
-                audioScript.musicObj[0].SetActive(false);
-        }
-    }
-
     public void GoToMenu()
     {
-        if (audioScript && audioScript.musicObj[0])
-        {
-            Debug.Log("in");
-            for(int i = 0; i < audioScript.musicObj.Length; i++)
-            {
-                audioScript.musicObj[i].SetActive(false);
-            }
-        }
         SceneManager.LoadScene("StartScene");
-        if(optionsMenu != null )
-        {
-            optionsMenu.SetActive(true);
-            creditsMenu.SetActive(false);
-            howToPlayMenu.SetActive(false);
-        }
     }
 
     public void GoToOptions()
     {
-        SceneManager.LoadScene("OptionsScene");
+        mainMenu.SetActive(false);
+        creditsMenu.SetActive(false);
+        howToPlayMenu.SetActive(false);
+        optionsMenu.SetActive(true);
     }
 
     public void GoToHowToPlay()
@@ -73,6 +56,25 @@ public class MainMenu : MonoBehaviour
     {
         creditsMenu.SetActive(true);
         optionsMenu.SetActive(false);
+    }
+
+    public void GoToMenuBack()
+    {
+        optionsMenu.SetActive(false);
+        mainMenu.SetActive(true);
+    }
+
+    public void ToggleMute()
+    {
+        isMuted = !isMuted;
+        if (isMuted)
+        {
+            mainMenuTrack.Pause();
+        }
+        else
+        {
+            mainMenuTrack.Play();
+        }
     }
 
 }
