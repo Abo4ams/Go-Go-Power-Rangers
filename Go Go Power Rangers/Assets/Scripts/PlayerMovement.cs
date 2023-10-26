@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject blueOrbPrefab;
     [SerializeField] private GameObject obstaclePrefab;
 
+    public AudioSource invalidInputAudio;
+
     private Queue<GameObject> planes = new Queue<GameObject>();
 
     Rigidbody rb;
@@ -67,6 +69,8 @@ public class PlayerMovement : MonoBehaviour
                 postitionToGo.x += laneWidth;
                 transform.position = postitionToGo;
             }
+            else 
+                invalidInputAudio.Play();
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
@@ -76,6 +80,8 @@ public class PlayerMovement : MonoBehaviour
                 postitionToGo.x -= laneWidth;
                 transform.position = postitionToGo;
             }
+            else
+                invalidInputAudio.Play();
         }
 
         

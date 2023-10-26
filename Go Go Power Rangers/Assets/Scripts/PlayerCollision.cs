@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerCollision : MonoBehaviour
 {
-    private static int score = 0;
+    public static int score = 0;
     public int red = 0;
     public int green = 0;
     public int blue = 0;
@@ -13,19 +13,28 @@ public class PlayerCollision : MonoBehaviour
     [SerializeField] public TMP_Text redText;
     [SerializeField] public TMP_Text greenText;
     [SerializeField] public TMP_Text blueText;
-    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] public TMP_Text scoreText;
+
+    public AudioSource backgroundAudio;
+    public AudioSource collectOrbAudio;
+    public AudioSource hitObstacleAudio;
+    
 
     public PlayerMovement movementScript;
 
     private void Start()
     {
+        
+        if(SceneManager.GetActiveScene().name == "GameScene")
+            score = 0;
         movementScript = GetComponent<PlayerMovement>();
     }
 
     private void Update()
     {
         collisionTimeout = Mathf.Min(10, collisionTimeout + 1);
-        scoreText.text = "Score: " + score;
+        if(scoreText != null)
+            scoreText.text = "Score: " + score;
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -56,6 +65,7 @@ public class PlayerCollision : MonoBehaviour
             scoreText.text = "Score: " + score;
             red = Mathf.Min(5, red + pointsToAdd);
             redText.text = "Points: " + red;
+            collectOrbAudio.Play();
             Destroy(parentPrefab);
         }
         if (parentPrefab != null && parentPrefab.tag.Equals("greenOrb"))
@@ -68,6 +78,7 @@ public class PlayerCollision : MonoBehaviour
             scoreText.text = "Score: " + score;
             green = Mathf.Min(5, green + pointsToAdd);
             greenText.text = "Points: " + green;
+            collectOrbAudio.Play();
             Destroy(parentPrefab);
         }
         if (parentPrefab != null && parentPrefab.tag.Equals("blueOrb"))
@@ -80,12 +91,14 @@ public class PlayerCollision : MonoBehaviour
             scoreText.text = "Score: " + score;
             blue = Mathf.Min(5, blue + pointsToAdd);
             blueText.text = "Points: " + blue;
+            collectOrbAudio.Play();
             Destroy(parentPrefab);
         }
         if (parentPrefab != null && parentPrefab.tag.Equals("obstacle"))
         {
             if (collisionTimeout == 10 && movementScript.playerState != PlayerMovement.PlayerState.NEUTRAL)
             {
+                hitObstacleAudio.Play();
                 if (collisionTimeout == 10 && blueShield)
                 {
                     Destroy(parentPrefab);

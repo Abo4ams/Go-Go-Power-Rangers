@@ -6,6 +6,11 @@ public class GameLogic : MonoBehaviour
     public PlayerMovement movementScript;
     public PlayerCollision collisionScript;
     public PauseMenu pauseMenu;
+
+    public AudioSource powerSwitchAudio;
+    public AudioSource powerUpAudio;
+    public AudioSource invalidInputAudio;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,32 +28,41 @@ public class GameLogic : MonoBehaviour
         {
             if (collisionScript.red == 5)
             {
+                powerSwitchAudio.Play();
                 movementScript.playerState = PlayerMovement.PlayerState.RED;
                 collisionScript.red--;
                 collisionScript.redText.text = "Points: " + collisionScript.red;
                 movementScript.greenPowerup = false;
                 collisionScript.blueShield = false;
             }
+            else
+                invalidInputAudio.Play();
         }
         if (Input.GetKeyDown(KeyCode.K))
         {
             if (collisionScript.green == 5)
             {
+                powerSwitchAudio.Play();
                 movementScript.playerState = PlayerMovement.PlayerState.GREEN;
                 collisionScript.green--;
                 collisionScript.greenText.text = "Points: " + collisionScript.green;
                 collisionScript.blueShield = false;
             }
+            else
+                invalidInputAudio.Play();
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
             if (collisionScript.blue == 5)
             {
+                powerSwitchAudio.Play();
                 movementScript.playerState = PlayerMovement.PlayerState.BLUE;
                 collisionScript.blue--;
                 collisionScript.blueText.text = "Points: " + collisionScript.blue;
                 movementScript.greenPowerup = false;
             }
+            else
+                invalidInputAudio.Play();
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -65,6 +79,7 @@ public class GameLogic : MonoBehaviour
                 collisionScript.red--;
                 collisionScript.redText.text = "Points: " + collisionScript.red;
                 destroyAllObstacles();
+                powerUpAudio.Play();
                 break;
             case PlayerMovement.PlayerState.GREEN:
                 if(collisionScript.green > 1)
@@ -74,12 +89,14 @@ public class GameLogic : MonoBehaviour
                         movementScript.greenPowerup = true;
                         collisionScript.green--;
                         collisionScript.greenText.text = "Points: " + collisionScript.green;
+                        powerUpAudio.Play();
                     }
                 }
                 else
                 {
                     collisionScript.green--;
                     collisionScript.greenText.text = "Points: " + collisionScript.green;
+                    powerUpAudio.Play();
                 }
                 break;
             case PlayerMovement.PlayerState.BLUE:
@@ -89,6 +106,7 @@ public class GameLogic : MonoBehaviour
                     {
                         collisionScript.blue--;
                         collisionScript.blueText.text = "Points: " + collisionScript.blue;
+                        powerUpAudio.Play();
                     }
                     collisionScript.blueShield = true;
                 }
@@ -96,7 +114,11 @@ public class GameLogic : MonoBehaviour
                 {
                     collisionScript.blue--;
                     collisionScript.blueText.text = "Points: " + collisionScript.blue;
+                    powerUpAudio.Play();
                 }
+                break;
+            default: 
+                invalidInputAudio.Play(); 
                 break;
         }
     }
@@ -123,15 +145,24 @@ public class GameLogic : MonoBehaviour
         {
             case PlayerMovement.PlayerState.RED:
                 if(collisionScript.red == 0)
+                {
                     movementScript.playerState = PlayerMovement.PlayerState.NEUTRAL;
+                    powerSwitchAudio.Play();
+                }
                 break;
             case PlayerMovement.PlayerState.GREEN:
                 if (collisionScript.green == 0)
+                {
                     movementScript.playerState = PlayerMovement.PlayerState.NEUTRAL;
+                    powerSwitchAudio.Play();
+                }
                 break;
             case PlayerMovement.PlayerState.BLUE:
                 if (collisionScript.blue == 0)
+                {
                     movementScript.playerState = PlayerMovement.PlayerState.NEUTRAL;
+                    powerSwitchAudio.Play();
+                }
                 break;
         }
     }

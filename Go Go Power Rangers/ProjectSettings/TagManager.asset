@@ -9,6 +9,7 @@ TagManager:
   - greenOrb
   - blueOrb
   - Plane
+  - BackgroundMenuMusic
   layers:
   - Default
   - TransparentFX

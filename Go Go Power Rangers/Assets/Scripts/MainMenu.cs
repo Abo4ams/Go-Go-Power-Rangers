@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class MainMenu : MonoBehaviour
 {
     public GameObject creditsMenu;
     public GameObject howToPlayMenu;
     public GameObject optionsMenu;
+    public AudioController audioScript;
 
     public void Start()
     {
@@ -14,7 +16,10 @@ public class MainMenu : MonoBehaviour
             creditsMenu.SetActive(false);
             howToPlayMenu.SetActive(false);
         }
+        if (audioScript && audioScript.musicObj[0])
+            audioScript.musicObj[0].SetActive(true);
     }
+
     public void PlayGame()
     {
         SceneManager.LoadScene("GameScene");
@@ -25,8 +30,25 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    private void Update()
+    {
+        if (SceneManager.GetActiveScene().name == "GameScene")
+        {
+            if (audioScript && audioScript.musicObj[0])
+                audioScript.musicObj[0].SetActive(false);
+        }
+    }
+
     public void GoToMenu()
     {
+        if (audioScript && audioScript.musicObj[0])
+        {
+            Debug.Log("in");
+            for(int i = 0; i < audioScript.musicObj.Length; i++)
+            {
+                audioScript.musicObj[i].SetActive(false);
+            }
+        }
         SceneManager.LoadScene("StartScene");
         if(optionsMenu != null )
         {
