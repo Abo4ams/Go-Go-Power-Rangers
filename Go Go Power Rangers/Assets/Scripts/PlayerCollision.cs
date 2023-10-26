@@ -1,9 +1,10 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerCollision : MonoBehaviour
 {
-    private int score = 0;
+    private static int score = 0;
     public int red = 0;
     public int green = 0;
     public int blue = 0;
@@ -24,6 +25,7 @@ public class PlayerCollision : MonoBehaviour
     private void Update()
     {
         collisionTimeout = Mathf.Min(10, collisionTimeout + 1);
+        scoreText.text = "Score: " + score;
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -95,6 +97,11 @@ public class PlayerCollision : MonoBehaviour
                     movementScript.playerState = PlayerMovement.PlayerState.NEUTRAL;
                 }
                 collisionTimeout = 0;
+            }
+            else
+            {
+                if(collisionTimeout == 10)
+                    SceneManager.LoadScene("EndScene");
             }
             
         }
